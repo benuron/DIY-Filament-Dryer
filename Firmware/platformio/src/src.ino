@@ -20,6 +20,7 @@ int WiFi_status = WL_IDLE_STATUS;
 
 Adafruit_SHT31 temp_sensor_in = Adafruit_SHT31();
 Adafruit_Si7021 temp_sensor_out = Adafruit_Si7021();
+//Adafruit_SHT31 temp_sensor_out = Adafruit_SHT31();
 
 float temperature_samples_in[PID_SAMPLES] = {0};
 float temperature_samples_heater[PID_SAMPLES] = {0};
@@ -112,7 +113,7 @@ void setup()
     delay(1000);
 
     // Connect to WiFi
-    Serial.print("Connecting to SSID: ");
+    /* Serial.print("Connecting to SSID: ");
     Serial.println(ssid);
     while (WiFi_status != WL_CONNECTED)
     {
@@ -121,7 +122,24 @@ void setup()
         // wait 5 seconds and check again
         delay(5000);
     }
+    Serial.println(""); */
+
+    Serial.println();
+    Serial.println();
+    Serial.print("Connecting to ");
+    Serial.println(ssid);
+
+    WiFi.begin(ssid, password);
+
+    while (WiFi.status() != WL_CONNECTED) {
+        delay(1000);
+        Serial.print(WiFi.status());
+    }
+
     Serial.println("");
+    Serial.println("WiFi connected");
+    Serial.println("IP address: ");
+    Serial.println(WiFi.localIP());
 
     if (!MDNS.begin(MDNS_NAME))
     {
